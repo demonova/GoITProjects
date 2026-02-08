@@ -1,3 +1,5 @@
+import pytest
+
 from datetime import datetime, timedelta
 
 from upcoming_birthdays import get_upcoming_birthdays
@@ -53,7 +55,7 @@ def test_congratulation_not_on_weekend():
             item["congratulation_date"], "%Y.%m.%d"
         ).date()
 
-        assert congratulation_date.weekday() < 5  # 0–4 → пн–пт
+        assert congratulation_date.weekday() < 5  # 0–4 → Monday–Friday
 
 def test_result_format():
     users = [
@@ -67,7 +69,7 @@ def test_result_format():
         assert "congratulation_date" in item
         assert isinstance(item["name"], str)
 
-        # проверка формата даты
+        # Check if congratulation_date is in correct format
         datetime.strptime(item["congratulation_date"], "%Y.%m.%d")
 
 def test_return_type():
@@ -76,3 +78,34 @@ def test_return_type():
     result = get_upcoming_birthdays(users)
 
     assert isinstance(result, list)
+
+def test_feb_14_birthday_shifted_to_monday_from_feb_8():
+    today = datetime.today().date()
+
+    # Test make sense only if today is February 8
+    if not (today.month == 2 and today.day == 8):
+        pytest.skip("Test is relevant only on February 8")
+
+    birthday = today.replace(month=2, day=14)
+
+    # Test make sense only if February 14 is on a weekend
+    if birthday.weekday() < 5:
+        pytest.skip("February 14 is not a weekend this year")
+
+    users = [
+        {"name": "Test User", "birthday": "1990.02.14"},
+    ]
+
+    result = get_upcoming_birthdays(users)
+
+    assert len(result) == 1
+
+    congratulation_date = datetime.strptime(
+        result[0]["congratulation_date"], "%Y.%m.%d"
+    ).date()
+
+    # Ожидаем перенос на понедельник
+    assert congratulation_date.weekday() == 0  # Monday
+    assert congratulation_date == birthday + timedelta(
+        days=(7 - birthday.weekday())
+    )
