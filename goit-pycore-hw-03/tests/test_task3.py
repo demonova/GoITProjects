@@ -1,6 +1,6 @@
 import pytest
 
-from normalize_phone import normalize_phone
+from src.task3 import normalize_phone
 
 
 @pytest.mark.parametrize(

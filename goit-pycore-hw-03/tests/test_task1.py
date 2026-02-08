@@ -1,7 +1,7 @@
 import pytest
 from datetime import date, timedelta
 
-from days_from_today import get_days_from_today
+from src.task1 import get_days_from_today
 
 
 @pytest.mark.parametrize("bad_date", [

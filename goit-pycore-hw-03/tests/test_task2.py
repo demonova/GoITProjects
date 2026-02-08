@@ -1,6 +1,6 @@
 import pytest
 
-from numbers_ticket import get_numbers_ticket
+from src.task2 import get_numbers_ticket
 
 
 def test_valid_ticket_basic():

@@ -2,7 +2,7 @@ import pytest
 
 from datetime import datetime, timedelta
 
-from upcoming_birthdays import get_upcoming_birthdays
+from src.task4 import get_upcoming_birthdays
 
 
 def test_upcoming_birthdays_range():
