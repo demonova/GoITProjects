@@ -1,4 +1,4 @@
-# 🐍 Python Assistant Bot & Core Concepts
+# 🐍 Homework: Python Assistant Bot & Core Concepts
 
 ![Python](https://img.shields.io/badge/Python-3.10+-blue)
 ![Status](https://img.shields.io/badge/Status-Completed-brightgreen)
